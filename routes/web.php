@@ -26,6 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::get('create', function(){return 'create';})->middleware('permission:create');
+    Route::get('read', function(){return 'read';})->middleware('permission:read');
+    Route::get('update', function(){return 'update';})->middleware('permission:update');
+    Route::get('delete', function(){return 'delete';})->middleware('permission:delete');
+
 });
 
 require __DIR__.'/auth.php';
