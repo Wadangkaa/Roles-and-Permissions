@@ -8,9 +8,19 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
+                @if (auth()->user()->hasPermission('create'))
+                    <a name="" id="" class="btn btn-primary" href="#" role="button">Create</a>
+                @endif
+
+                @if (auth()->user()->hasPermission('read'))
+                    <a name="" id="" class="btn btn-primary" href="#" role="button">Read</a>
+                @endif
+                @if (auth()->user()->hasPermission('update'))
+                    <a name="" id="" class="btn btn-primary" href="#" role="button">Update</a>
+                @endif
+                @if (auth()->user()->hasPermission('delete'))
+                    <a name="" id="" class="btn btn-primary" href="#" role="button">Delete</a>
+                @endif
             </div>
         </div>
     </div>

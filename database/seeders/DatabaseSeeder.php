@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,12 +15,42 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class
+        ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => 'admin'
+            'password' => 'admin',
+            'role_id' => 1
         ]);
+        User::factory()->create([
+            'name' => "User",
+            'email' => 'iamuser@example.com',
+            'role_id' => 2
+        ]);
+        User::factory()->create([
+            'name' => "manager",
+            'email' => 'iamManager@example.com',
+            'role_id' => 3
+        ]);
+
+        $role_and_permissions = [
+            [1, [1, 2, 3, 4]],
+            [2, [2]],
+            [3, [1, 2, 3]]
+        ];
+
+        foreach ($role_and_permissions as $key => $role_and_permission) {
+            foreach ($role_and_permission[1] as $key => $permission) {
+                DB::table('role_permissions')->insert([
+                    'role_id' => $role_and_permission[0],
+                    'permission_id' => $permission
+                ]);
+            }
+        }
+        
     }
 }
